@@ -8,7 +8,7 @@ def imafunction():
     workflow = gbdx.Workflow([ aop2envi ])
     workflow.savedata(
        aop2envi.outputs.output_data,
-       location='Doctest/hdr/test2'
+       location='Doctest/hdr/test'
     )
     workflow.execute()
     
