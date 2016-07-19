@@ -1,4 +1,5 @@
-import os
+# Quickstart **Example Script Run in Python using the gbdxTools InterfaceExample producing a single band vegetation mask from a tif file.
+# First Initialize the Environment
 
 def imafunction():
     from gbdxtools import Interface
@@ -13,10 +14,11 @@ def imafunction():
        location='Doctest/hdr/test2'
     )
     workflow.execute()
-    status = workflow.status 
-    return status
+    
+    status = workflow.status["state"] 
+    print status
+    return {'wfid': 1, 'wfst': '2'}
+    
     	
-print os.getcwd()
-
 if __name__ == "__main__":
     imafunction()
