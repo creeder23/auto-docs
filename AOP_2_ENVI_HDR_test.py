@@ -1,6 +1,3 @@
-# Quickstart **Example Script Run in Python using the gbdxTools InterfaceExample producing a single band vegetation mask from a tif file.
-# First Initialize the Environment
-
 def imafunction():
     from gbdxtools import Interface
     gbdx = Interface()
