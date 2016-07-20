@@ -16,6 +16,8 @@ def runfunction():
         status = workflow.status["state"]
         wf_id = workflow.id
 
+        ifarted
+
         # print wf_id
         # print status
 
