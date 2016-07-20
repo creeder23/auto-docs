@@ -24,8 +24,8 @@ def runfunction():
         status = workflow.status["state"]
         wf_id = workflow.id
 
-        print wf_id
-        print status
+        # print wf_id
+        # print status
 
     except:
 

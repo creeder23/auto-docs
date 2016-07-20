@@ -13,27 +13,68 @@ def get_default(description):
     return description[ind1+len('Default is')+1:ind2]
 
 
+# This is a list of passing values for the test of the example code.
+# If anything else is returned, the test fails and the code is not loaded.
 wf_pass_list = ['pending', 'running']
 
-fail_string = '\n# I failed. So, no code for you\n'
+# If the test of the example code fails, this is the text that is loaded into the code block.
+# fail_string = '\n# I tried to run, but I failed. So, NO CODE FOR YOU!.\n'
 
+fail_string = """
+
+        Example didn't run?
+
+        You're Code Is Dead To Me...
+
+
+                       ...
+                     ;::::;
+                   ;::::; :;
+                 ;:::::'   :;
+                ;:::::;     ;.
+               ,:::::'       ;           OOO
+               ::::::;       ;          OOOOO
+               ;:::::;       ;         OOOOOOOO
+              ,;::::::;     ;'         / OOOOOOO
+            ;:::::::::`. ,,,;.        /  / DOOOOOO
+          .';:::::::::::::::::;,     /  /     DOOOO
+         ,::::::;::::::;;;;::::;,   /  /        DOOO
+        ;`::::::`'::::::;;;::::: ,#/  /          DOOO
+        :`:::::::`;::::::;;::: ;::#  /            DOOO
+        ::`:::::::`;:::::::: ;::::# /              DOO
+        `:`:::::::`;:::::: ;::::::#/               DOO
+         :::`:::::::`;; ;:::::::::##                OO
+         ::::`:::::::`;::::::::;:::#                OO
+         `:::::`::::::::::::;'`:;::#                O
+          `:::::`::::::::;' /  / `:#
+           ::::::`:::::;'  /  /   `#
+
+"""
+
+# The location of the template file.
 markdown_template_file_name = 'DOCUMENT_TEMPLATE.md'
 
+# Text that is loaded into the markdown after the text from the API for the task description.
 description_footer_text = 'This task can be run with Python using ' \
                           '[gbdxtools](https://github.com/DigitalGlobe/gbdxtools) or through the ' \
                           '[GBDX Web Application](https://gbdx.geobigdata.io/materials/)'
 
+# Text that is loaded into the markdown after the section title, but before the code, for the quickstart example.
 quickstart_header_test = 'Quick start example.'
 
+# Text that is loaded into the markdown after the section title, but before the code, for the advanced example.
 advanced_header_test = 'Include example(s) with complicated parameter settings and/or example(s) where the task is ' \
                        'used as part of a workflow involving other GBDX tasks.'
 
-
+# Text that is loaded into the markdown after the section title, but before the inputs from the API,
+# for the inputs section.
 inputs_header = 'The following table lists all taskname inputs.\n' \
                 'Mandatory (optional) settings are listed as Required = True (Required = False).\n\n' \
                 '  Name  |  Required  |  Default  |  Valid Values  |  Description  \n' \
                 '--------|:----------:|-----------|----------------|---------------'
 
+# Text that is loaded into the markdown after the section title, but before the inputs from the API,
+# for the outputs section.
 outputs_header = 'The following table lists all taskname outputs.\n' \
                  'Mandatory (optional) settings are listed as Required = True (Required = False).\n\n' \
                  '  Name  |  Required  |  Default  |  Valid Values  |  Description  \n' \
@@ -43,20 +84,20 @@ outputs_header = 'The following table lists all taskname outputs.\n' \
 # Instantiating the GBDx Tools Interface
 gbdx = Interface()
 
-# Getting a list of known tasks on GBDx
+# Getting a list of known tasks on GBDx as we don't want to error when we query for the task description.
 known_tasks = gbdx.workflow.list_tasks()['tasks']
 
-# This data object will contain the names of all of the tasks, the status of the tests,
-# and the content for the markdown document.
-# The associated files will be named exactly the same as the task name in this list.
+# This data object will initially contain the names of all of the tasks. Further on, it will load
+# the status of the tests, and the content for the markdown document.
+# The associated files (markdown and example code) will be named using the task name in this list.
 list_of_tasks = [
                     {'name': 'AOP_ENVI_HDR'},
                     {'name': 'protogenV2RAV'}
                 ]
 
-# Loop through the list of tasks and mark whether the docs/code already exist
-# Also, if the task has a quickstart or an advanced example, load that module so we can call the function
-# to test that it passes
+# Loop through the list of tasks and mark whether the docs/code/GBDx task already exist,
+# create the expected file names for easy reference later, and, if the task has a quickstart or an advanced example,
+# load that module so we can call the function to test that it passes
 for i in list_of_tasks:
 
     i['markdown'] = False
@@ -64,14 +105,19 @@ for i in list_of_tasks:
     i['advanced'] = False
     i['knowntask'] = False
 
+    # Build the expected markdown file name as we need this regardless of whether it already exists
     i['markdown_file_name'] = '%s.md' % i['name']
 
+    # Check to see if the markdown file exists already so we don't overwrite it
+    if os.path.isfile(i['markdown_file_name']) is True:
+        i['markdown'] = True
+
+    # Check to see if the task is a known task on GBDx
     if i['name'] in known_tasks:
         i['knowntask'] = True
 
-    if os.path.isfile('%s.md' % i['name']) is True:
-        i['markdown'] = True
-
+    # Check to see if there is a quickstart python file. If so, build the expected file names and
+    # load the module for testing
     if os.path.isfile('%s_qs.py' % i['name']) is True:
         i['quickstart'] = True
         i['quickstart_name'] = '%s_qs' % i['name']
@@ -80,6 +126,8 @@ for i in list_of_tasks:
         module_obj = __import__(i['quickstart_name'])
         globals()[i['quickstart_name']] = module_obj
 
+    # Check to see if there is an advanced python file. If so, build the expected file names and
+    # load the module for testing
     if os.path.isfile('%s_adv.py' % i['name']) is True:
         i['advanced'] = True
         i['advanced_name'] = '%s_adv' % i['name']
@@ -89,7 +137,7 @@ for i in list_of_tasks:
         globals()[i['advanced_name']] = module_obj
 
 
-# For each task in the list, check to see if it is a valid task and hit the API and get the task details
+# For each task that is known to exist on GBDx already, hit the API and get the task details
 for i in list_of_tasks:
     if i['knowntask'] is True:
         # retrieve task info and store it in the task data object
@@ -104,11 +152,6 @@ for i in list_of_tasks:
     for j in ['quickstart', 'advanced']:
         if i[j] is True:
 
-            # # We don't want to run these 100 times. This is just for testing.
-            # i['%s_wfid' % j] = 1
-            # i['%s_wfst' % j] = 'pending'
-            # i['%s_pass' % j] = True
-
             # Run the function to test the example code
             r = globals()[i['%s_name' % j]].runfunction()
 
@@ -121,11 +164,21 @@ for i in list_of_tasks:
                 i['%s_pass' % j] = True
 
 
+            # ## For Testing
+            # # For testing: Simply creates the response rather than calling the same functions on GBDx over and over.
+            # i['%s_wfid' % j] = 1
+            # i['%s_wfst' % j] = 'pending'
+            # i['%s_pass' % j] = True
+            # ## For Testing
+
+
 # For each task that has example code and passes the test, read in the example code and store for inclusion in the
 # markdown document
 for i in list_of_tasks:
     for j in ['quickstart', 'advanced']:
+        # If there is a quickstart of advanced example, check if the code passed the test
         if i[j] is True:
+            # If the test passed, get the code
             if i['%s_pass' % j] is True:
 
                 with open(i['%s_file_name' % j]) as f:
@@ -136,49 +189,53 @@ for i in list_of_tasks:
 
                 i['%s_text' % j] = s[start:end]
 
-                # Removing tabs needed to accommodate the try/except
+                # Because this code is within a function and within a try/except, it has two more tabs per line
+                # and a few extra lines than it needs in the displayed example.
+                # This code removes the additional tabs and lines for the code that will be displayed in the markdown.
                 i['%s_text' % j] = i['%s_text' % j].replace('\n        ', '\n')
                 i['%s_text' % j] = i['%s_text' % j].replace('\n\n', '\n')
 
+            # If the test failed, don't load the code into the docs. Load the default failed message.
             else:
 
                 i['%s_text' % j] = fail_string
 
 
-# Now that we have all of the information, we can write it to the markdown file
-# load template
+# Now that we have all of the information we need, we can write it to the markdown file for each task in the list.
 for i in list_of_tasks:
+    # We don't create markdowns for tasks that are not on GBDx
     if i['knowntask'] is True:
+        # If the markdown file already exists, read it in
         if i['markdown'] is True:
             with open(i['markdown_file_name']) as f:
                 s = f.read()
+        # If not, we start with the template
         else:
             with open(markdown_template_file_name) as f:
                 s = f.read()
 
+        # Replace instances of "taskname" in the template with the actual task name
         # Note that this will prepare the document with the correct task name on the first run as it will use the
         # template.
-        # On subsequent runs, this will not be needed as the task name should not change.
+        # On subsequent runs, this will not actually make any changes as the task name will already be in the
+        # markdown file and the "taskname" phrase will not.
         s = s.replace('taskname', i['name'])
 
-        # This code will replace anything between the description and table of contents sections with the
-        # description from the tasks API response.
+        # This code will replace anything between the Description and Table of Contents sections with the
+        # description text from the tasks API response.
         # Note the use of the footer, which is defined at the start of this code.
         if i['knowntask'] is True:
             start = s.index('### Description') + len('### Description')
             end = s.index('### Table of Contents', start)
-
             ins_str = '\n%s\n\n%s\n\n' % (i['description'], description_footer_text)
-
             s = s[:start] + ins_str + s[end:]
 
-        # This code will replace anything between the Inputs and Outputs sections
+        # This code will replace anything between the Inputs and Outputs sections with the inputs from the
+        # API response
         # Note the use of the header, which is defined at the start of this code.
         if i['knowntask'] is True:
-
             start = s.index('### Inputs') + len('### Inputs')
             end = s.index('### Outputs', start)
-
             port_strings = []
             for p in i['input_ports']:
                 default = get_default(p['description'])
@@ -189,18 +246,15 @@ for i in list_of_tasks:
                                               default,
                                               ' ',
                                               p['description']]))
-
             ins_str = '\n%s\n%s\n\n' % (inputs_header, '\n'.join(port_strings))
-
             s = s[:start] + ins_str + s[end:]
 
-        # This code will replace anything between the Outputs and Output structure sections
+        # This code will replace anything between the Outputs and Output structure sections with the outputs from the
+        # API response
         # Note the use of the header, which is defined at the start of this code.
         if i['knowntask'] is True:
-
             start = s.index('### Outputs') + len('### Outputs')
             end = s.index('**Output structure**', start)
-
             port_strings = []
             for p in i['output_ports']:
                 default = get_default(p['description'])
@@ -211,21 +265,15 @@ for i in list_of_tasks:
                                               default,
                                               ' ',
                                               p['description']]))
-
             ins_str = '\n%s\n%s\n\n' % (outputs_header, '\n'.join(port_strings))
-
             s = s[:start] + ins_str + s[end:]
-
 
         # This code will replace anything between the Quickstart and Inputs sections with the quickstart example code
         # Note the use of the header, which is defined at the start of this code.
         if i['quickstart'] is True:
-
             start = s.index('### Quickstart') + len('### Quickstart')
             end = s.index('### Inputs', start)
-
             ins_str = '\n%s\n\n%s%s%s\n\n' % (quickstart_header_test, "```python", i['quickstart_text'], "```")
-
             s = s[:start] + ins_str + s[end:]
 
         # This code will replace anything between the Advanced and Issues sections with the advanced example code
@@ -233,9 +281,7 @@ for i in list_of_tasks:
         if i['advanced'] is True:
             start = s.index('### Advanced') + len('### Advanced')
             end = s.index('### Issues', start)
-
             ins_str = '\n%s\n\n%s%s%s\n\n' % (advanced_header_test, "```python", i['advanced_text'], "```")
-
             s = s[:start] + ins_str + s[end:]
 
         # This code writes the modified contents to the new markdown file, replacing the old file if it is present.
