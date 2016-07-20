@@ -1,8 +1,9 @@
-# taskname
+# AOP_ENVI_HDR
 
 ### Description
+Add an ENVI header file with the images wavelength data.
 
-This task can be run with Python using [gbdxtools](https://github.com/DigitalGlobe/gbdxtools) or through the [GBDX Web Application](https://gbdx.geobigdata.io/materials/).  
+This task can be run with Python using [gbdxtools](https://github.com/DigitalGlobe/gbdxtools) or through the [GBDX Web Application](https://gbdx.geobigdata.io/materials/)
 
 ### Table of Contents
  * [Quickstart](#quickstart) - Get started!
@@ -14,30 +15,40 @@ This task can be run with Python using [gbdxtools](https://github.com/DigitalGlo
  * [Contact](#contact) - Contact information.
 
 ### Quickstart
-
 Quick start example.
 
 ```python
-# Quickstart example for taskname.
+from gbdxtools import Interface
+gbdx = Interface()
+aop2envi = gbdx.Task("AOP_ENVI_HDR")
+aop2envi.inputs.image = 's3://gbd-customer-data/7d8cfdb6-13ee-4a2a-bf7e-0aff4795d927/ENVI/SI/AOP/055026839010_01/'
+workflow = gbdx.Workflow([aop2envi])
+workflow.savedata(
+    aop2envi.outputs.output_data,
+    location='Doctest/hdr/test'
+)
+workflow.execute()
+status = workflow.status["state"]
+wf_id = workflow.id
+# print wf_id
+# print status
 ```
 
 ### Inputs
-
 The following table lists all taskname inputs.
 Mandatory (optional) settings are listed as Required = True (Required = False).
 
   Name  |  Required  |  Default  |  Valid Values  |  Description  
 --------|:----------:|-----------|----------------|---------------
-
+image|True|None| |The directory for the AOP image data.
 
 ### Outputs
-
 The following table lists all taskname outputs.
 Mandatory (optional) settings are listed as Required = True (Required = False).
 
-  Name  |  Required  |  Default  |  Valid Values  |  Description
+  Name  |  Required  |  Default  |  Valid Values  |  Description  
 --------|:----------:|-----------|----------------|---------------
-
+output_data|True|None| |The original AOP image data with the ENVI .hdr file.
 
 **Output structure**
 
@@ -57,4 +68,4 @@ For background on the development and implementation of this task see [here](Ins
 
 
 ### Contact
-List contact information for technical support.
+List contact information for technical support. I like to be contacted

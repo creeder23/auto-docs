@@ -27,8 +27,6 @@ def runfunction():
         # print wf_id
         # print status
 
-        # status = 'failed'
-
     except:
 
         wf_id = 0

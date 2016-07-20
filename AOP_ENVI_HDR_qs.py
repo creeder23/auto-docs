@@ -13,7 +13,6 @@ def runfunction():
             location='Doctest/hdr/test'
         )
         workflow.execute()
-
         status = workflow.status["state"]
         wf_id = workflow.id
 
