@@ -22,7 +22,7 @@ list_of_tasks = [
 
 list_of_steps = {
                     'create_md': True,
-                    'run_tests': True
+                    'run_tests': False
                 }
 
 # This is a list of passing values for the test of the example code.
@@ -303,6 +303,51 @@ if list_of_steps['create_md'] is True:
 # TODO: We should either dump out some JSON here or create a report of what made and what failed
 # and output that as a log file. For now, I'm just printing the data object.
 
-print 'Success!'
+
+report = []
+
+# report = [
+#             {
+#                 'tasn name one': {
+#                             'Markdown generated': True,
+#                             'Quickstart esists': True,
+#                             'Quickstart passed': False,
+#                             'Advanced esists': True,
+#                             'Advanced passed': False
+#
+#                             }
+#             },
+#             {
+#                 'tasn name two': {
+#                             'Markdown generated': True,
+#                             'Quickstart esists': True,
+#                             'Quickstart passed': False,
+#                             'Advanced esists': True,
+#                             'Advanced passed': False
+#
+#                         }
+#             }
+#         ]
+
+for i in list_of_tasks:
+    temp = {
+        i['name']: {
+                    'Markdown generated': True
+                    }
+    }
+
+    if i['quickstart'] is True:
+        temp[i['name']]['Quickstart code esists'] = i['quickstart']
+        temp[i['name']]['Quickstart code passed'] = i['quickstart_pass']
+
+    if i['advanced'] is True:
+        temp[i['name']]['Advanced code esists'] = i['advanced']
+        temp[i['name']]['Advanced code passed'] = i['advanced_pass']
+
+    report.append(temp)
+
+
+print 'Document Creation Report: \n'
+print(json.dumps(report, sort_keys=False, indent=4))
 
 # print(json.dumps(list_of_tasks, sort_keys=False, indent=4))
