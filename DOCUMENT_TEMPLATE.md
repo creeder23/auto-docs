@@ -1,8 +1,8 @@
 # taskname
 
-Task description.
+### Description
 
-taskname can be run with Python using [gbdxtools](https://github.com/DigitalGlobe/gbdxtools) or through the [GBDX Web Application](https://gbdx.geobigdata.io/materials/).  
+This task can be run with Python using [gbdxtools](https://github.com/DigitalGlobe/gbdxtools) or through the [GBDX Web Application](https://gbdx.geobigdata.io/materials/).  
 
 ### Table of Contents
  * [Quickstart](#quickstart) - Get started!
@@ -40,7 +40,6 @@ Mandatory (optional) settings are listed as Required = True (Required = False).
 
   Name  |  Required  |  Default  |  Valid Values  |  Description  
 --------|:----------:|-----------|----------------|---------------
-inputshere
 
 
 ### Outputs
@@ -50,7 +49,6 @@ Mandatory (optional) settings are listed as Required = True (Required = False).
 
   Name  |  Required  |  Default  |  Valid Values  |  Description
 --------|:----------:|-----------|----------------|---------------
-outputshere
 
 
 **Output structure**
@@ -59,16 +57,15 @@ Explain output structure via example.
 
 
 ### Advanced
-Include example(s) with complicated parameter settings and/or example(s) where
-taskname is used as part of a workflow involving other GBDX tasks.
+Include example(s) with complicated parameter settings and/or example(s) where this task is used as part of a workflow involving other GBDX tasks.
 
 
 ### Issues
-List known past/current issues with taskname (e.g., version x does not ingest vrt files).
+List known past/current issues with this task (e.g., version x does not ingest vrt files).
 
 
 ### Background
-For background on the development and implementation of taskname see [here](Insert link here).
+For background on the development and implementation of this task see [here](Insert link here).
 
 
 ### Contact
