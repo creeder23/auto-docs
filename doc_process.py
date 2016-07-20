@@ -15,7 +15,7 @@ def get_default(description):
 
 wf_pass_list = ['pending', 'running']
 
-fail_string = 'I failed, so no code for you'
+fail_string = '\n# I failed. So, no code for you\n'
 
 markdown_template_file_name = 'DOCUMENT_TEMPLATE.md'
 
@@ -131,10 +131,14 @@ for i in list_of_tasks:
                 with open(i['%s_file_name' % j]) as f:
                     s = f.read()
 
-                start = s.index('runfunction():\n') + len('runfunction():\n')
-                end = s.index('return', start)
+                start = s.index('try:') + len('try:')
+                end = s.index('    except:', start)
 
                 i['%s_text' % j] = s[start:end]
+
+                # Removing tabs needed to accommodate the try/except
+                i['%s_text' % j] = i['%s_text' % j].replace('\n        ', '\n')
+                i['%s_text' % j] = i['%s_text' % j].replace('\n\n', '\n')
 
             else:
 
@@ -220,7 +224,7 @@ for i in list_of_tasks:
             start = s.index('### Quickstart') + len('### Quickstart')
             end = s.index('### Inputs', start)
 
-            ins_str = '\n%s\n\n%s\n%s\n%s\n\n' % (quickstart_header_test, "```python", i['quickstart_text'], "```")
+            ins_str = '\n%s\n\n%s%s%s\n\n' % (quickstart_header_test, "```python", i['quickstart_text'], "```")
 
             s = s[:start] + ins_str + s[end:]
 
@@ -230,7 +234,7 @@ for i in list_of_tasks:
             start = s.index('### Advanced') + len('### Advanced')
             end = s.index('### Issues', start)
 
-            ins_str = '\n%s\n\n%s\n%s\n%s\n\n' % (advanced_header_test, "```python", i['advanced_text'], "```")
+            ins_str = '\n%s\n\n%s%s%s\n\n' % (advanced_header_test, "```python", i['advanced_text'], "```")
 
             s = s[:start] + ins_str + s[end:]
 
