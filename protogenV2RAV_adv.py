@@ -22,6 +22,7 @@ def runfunction():
 
     status = workflow.status["state"]
     print status
+    status = 'failed'
     return {'wfid': 1, 'wfst': status}
 
 
