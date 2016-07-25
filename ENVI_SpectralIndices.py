@@ -15,12 +15,12 @@ envi_ndvi.inputs.index = '["Normalized Difference Vegetation Index", "WorldView 
 workflow = gbdx.Workflow([aop2envi, envi_ndvi])
 workflow.savedata(
 	aop2envi.outputs.output_data,
-	location='ENVI/SIS'
+	location='Auto-docs/ENVI/SIS'
 )
 
 workflow.savedata(
 	envi_ndvi.outputs.output_raster_uri,
-	location='ENVI/SIS'
+	location='Auto-docs/ENVI/SIS'
 )
 
 print workflow.execute()
