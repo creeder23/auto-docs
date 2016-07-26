@@ -16,8 +16,7 @@ def get_default(description):
 # the status of the tests, and the content for the markdown document.
 # The associated files (markdown and example code) will be named using the task name in this list.
 list_of_tasks = [
-                    {'name': 'AOP_ENVI_HDR'},
-                    {'name': 'protogenV2RAV'}
+                    {'name': 'ENVI_SpectralIndices'},
                 ]
 
 list_of_steps = {
