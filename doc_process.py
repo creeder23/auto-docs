@@ -21,7 +21,7 @@ list_of_tasks = [
 
 list_of_steps = {
                     'create_md': True,
-                    'run_tests': False
+                    'run_tests': True
                 }
 
 # This is a list of passing values for the test of the example code.
@@ -63,7 +63,7 @@ fail_string = """
 """
 
 # The location of the template file.
-markdown_template_file_name = 'DOCUMENT_TEMPLATE.md'
+markdown_template_file_name = '/Users/creeder/Documents/auto-docs/DOCUMENT_TEMPLATE.md'
 
 # Text that is loaded into the markdown after the text from the API for the task description.
 description_footer_text = 'This task can be run with Python using ' \
