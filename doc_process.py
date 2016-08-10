@@ -17,6 +17,18 @@ def get_default(description):
 # The associated files (markdown and example code) will be named using the task name in this list.
 list_of_tasks = [
                     {'name': 'ENVI_SpectralIndices'},
+                    {'name': 'ENVI_GaussianStretchRaster'},
+                    {'name': 'ENVI_QuerySpectralIndices'},
+                    {'name': 'ENVI_ISODATAClassification'},
+                    {'name': 'ENVI_ClassificationToShapefile'},
+                    {'name': 'ENVI_CalculateCloudMaskUsingFmask'},
+                    {'name': 'ENVI_ROIToClassification'},
+                    {'name': 'ENVI_AutoChangeThresholdClassification'},
+                    {'name': 'ENVI_ChangeThresholdClassification'},
+                    {'name': 'ENVI_SpectralAdaptiveCoherenceEstimator'},
+                    {'name': 'ENVI_SpectralAdaptiveCoherenceEstimatorUsingSubspaceBackgroundStatistics'},
+                    {'name': 'ENVI_SpectralSubspaceBackgroundStatistics'}
+
                 ]
 
 list_of_steps = {
@@ -97,6 +109,7 @@ gbdx = Interface()
 
 # Getting a list of known tasks on GBDx as we don't want to error when we query for the task description.
 known_tasks = gbdx.workflow.list_tasks()['tasks']
+print known_tasks
 
 # Loop through the list of tasks and mark whether the docs/code/GBDx task already exist,
 # create the expected file names for easy reference later, and, if the task has a quickstart or an advanced example,
