@@ -17,8 +17,9 @@ def runfunction():
         envi_ndvi = gbdx.Task("ENVI_SpectralIndices")
         envi_ndvi.inputs.input_raster = aop2envi.outputs.output_data.value
         envi_ndvi.inputs.file_types = "hdr"
+
 # Specify a string/list of indicies to run on the input_raster variable.  The order of indicies wi
-        envi_ndvi.inputs.index = '["Normalized Difference Vegetation Index", "Modified Red Edge Normalized Difference Vegetation Index", "WorldView Built-Up Index", "WorldView Non-Homogeneous Feature Difference", "WorldView Water Index", "WorldView Soil Index"]'
+        envi_ndvi.inputs.index = '["Normalized Difference Vegetation Index", "WorldView Built-Up Index", "WorldView Non-Homogeneous Feature Difference", "WorldView Water Index", "WorldView Soil Index"]'
         workflow = gbdx.Workflow([aoptask, aop2envi, envi_ndvi])
         workflow.savedata(
             aop2envi.outputs.output_data,

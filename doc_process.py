@@ -16,18 +16,7 @@ def get_default(description):
 # the status of the tests, and the content for the markdown document.
 # The associated files (markdown and example code) will be named using the task name in this list.
 list_of_tasks = [
-                    {'name': 'ENVI_SpectralIndices'},
-                    {'name': 'ENVI_GaussianStretchRaster'},
-                    {'name': 'ENVI_QuerySpectralIndices'},
-                    {'name': 'ENVI_ISODATAClassification'},
-                    {'name': 'ENVI_ClassificationToShapefile'},
-                    {'name': 'ENVI_CalculateCloudMaskUsingFmask'},
-                    {'name': 'ENVI_ROIToClassification'},
-                    {'name': 'ENVI_AutoChangeThresholdClassification'},
-                    {'name': 'ENVI_ChangeThresholdClassification'},
-                    {'name': 'ENVI_SpectralAdaptiveCoherenceEstimator'},
-                    {'name': 'ENVI_SpectralAdaptiveCoherenceEstimatorUsingSubspaceBackgroundStatistics'},
-                    {'name': 'ENVI_SpectralSubspaceBackgroundStatistics'}
+                    {'name': 'RoadTracker'}
 
                 ]
 
