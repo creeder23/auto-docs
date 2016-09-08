@@ -45,3 +45,6 @@ workflow.savedata(
 
 workflow.execute()
 workflow.status
+
+events = (workflow.events)
+json.dump (events.json, events)
