@@ -33,23 +33,3 @@ def getworkflow(events,taskname):
 
                 #return timedelta(starttime,endtime)
                 return   (endtime - starttime) / np.timedelta64(1, 's')
-
-
-
-'''
-2016-09-07 17:23:15.204995
-
-from datetime import datetime
-import numpy as np
-dt = datetime.utcnow()
-dt
-datetime.datetime(2012, 12, 4, 19, 51, 25, 362455)
-dt64 = np.datetime64(dt)
-ts = (dt64 - np.datetime64('1970-01-01T00:00:00Z')) / np.timedelta64(1, 's')
-ts
-1354650685.3624549
-datetime.utcfromtimestamp(ts)
-datetime.datetime(2012, 12, 4, 19, 51, 25, 362455)
-np.__version__
-'1.8.0.dev-7b75899'
-'''
