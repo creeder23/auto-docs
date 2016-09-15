@@ -2,7 +2,7 @@ import json
 import os
 
 
-def export_status(gbdx_workflow, filename = "temp.json"):
+def export_workflow(gbdx_workflow, filename = "temp.json"):
     """
     Takes an Interface object from gbdxtools
     and builds the workflow json

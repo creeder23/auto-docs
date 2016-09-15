@@ -11,9 +11,8 @@ def runfunction(data_num):
 # Quickstart **Example Script Run in Python using the gbdxTools InterfaceExample producing a single band vegetation mask from a tif file.
 # First Initialize the Environment
         from gbdxtools import Interface
-        import json
         gbdx = Interface()
-
+        import datetime
 #launch workflow ENVI_GaussianStretchRaster -> S3
 #example data WV02 image of Denver previously in 1-B format (multiple til files note stretch will be performed on 1 TIL file)
         data = "s3://receiving-dgcs-tdgplatform-com/055026839010_01_003"
@@ -27,11 +26,17 @@ def runfunction(data_num):
 
 
         workflow = gbdx.Workflow([ envitask ] )
+
+
+
         workflow.savedata(envitask.outputs.task_meta_data, location='ENVI/Gaussian')
         workflow.savedata(envitask.outputs.output_raster_uri, location='ENVI/Gaussian')
 
-
+        t1 = datetime.datetime.now()
         workflow.execute()
+        t2 = datetime.datetime.now()
+
+        while envitask != workflow.
         status = workflow.status["state"]
         wf_id = workflow.id
 
