@@ -1,14 +1,15 @@
 # taskname
 
-### Description
+Task description.
 
-This task can be run with Python using [gbdxtools](https://github.com/DigitalGlobe/gbdxtools) or through the [GBDX Web Application](https://gbdx.geobigdata.io/materials/).  
+taskname can be run with Python using [gbdxtools](https://github.com/DigitalGlobe/gbdxtools) or through the [GBDX Web Application](https://gbdx.geobigdata.io/materials/).  
 
 ### Table of Contents
  * [Quickstart](#quickstart) - Get started!
  * [Inputs](#inputs) - Required and optional task inputs.
  * [Outputs](#outputs) - Task outputs and output structure.
  * [Advanced](#advanced) - Additional information for advanced users.
+ * [Runtime](#runtime) - Example estimate of task runtime.
  * [Issues](#issues) - Current or past known issues.
  * [Background](#background) - Background information.
  * [Contact](#contact) - Contact information.
@@ -18,7 +19,19 @@ This task can be run with Python using [gbdxtools](https://github.com/DigitalGlo
 Quick start example.
 
 ```python
-# Quickstart example for taskname.
+# Quickstart example for taskname.  
+
+from gbdxtools import Interface
+gbdx = Interface()
+raster = 's3://gbd-customer-data/PathToImage/image.tif'
+taskname = gbdx.Task('taskname', raster=raster)
+
+workflow = gbdx.Workflow([taskname])  
+workflow.savedata(taskname.outputs.data, location='taskname')
+workflow.execute()
+
+print workflow.id
+print workflow.status
 ```
 
 ### Inputs
@@ -28,6 +41,7 @@ Mandatory (optional) settings are listed as Required = True (Required = False).
 
   Name  |  Required  |  Default  |  Valid Values  |  Description  
 --------|:----------:|-----------|----------------|---------------
+inputshere
 
 
 ### Outputs
@@ -37,6 +51,7 @@ Mandatory (optional) settings are listed as Required = True (Required = False).
 
   Name  |  Required  |  Default  |  Valid Values  |  Description
 --------|:----------:|-----------|----------------|---------------
+outputshere
 
 
 **Output structure**
@@ -45,15 +60,28 @@ Explain output structure via example.
 
 
 ### Advanced
-Include example(s) with complicated parameter settings and/or example(s) where this task is used as part of a workflow involving other GBDX tasks.
+Include example(s) with complicated parameter settings and/or example(s) where
+taskname is used as part of a workflow involving other GBDX tasks.
 
+### Runtime
+
+The following table lists all applicable runtime outputs. (This section will be completed the Algorithm Curation team)
+For details on the methods of testing the runtimes of the task visit the following link:(INSERT link to GBDX U page here)
+
+  Sensor Name  |  Average runtime  |  Total Area (k2)  |  Time(min)  |  Time/Area k2
+--------|:----------:|-----------|----------------|---------------
+QB | 41,551,668 | 312.07 |  |  |
+WV01| 1,028,100,320 |351.72 | | |
+WV02|35,872,942|329.87| | |
+WV03|35,371,971|196.27| | |
+GE| 57,498,000|332.97| | |
 
 ### Issues
-List known past/current issues with this task (e.g., version x does not ingest vrt files).
+List known past/current issues with taskname (e.g., version x does not ingest vrt files).
 
 
 ### Background
-For background on the development and implementation of this task see [here](Insert link here).
+For background on the development and implementation of taskname see [here](Insert link here).
 
 
 ### Contact
