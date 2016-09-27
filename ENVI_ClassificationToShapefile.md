@@ -1,7 +1,7 @@
 # ENVI_ClassificationToShapefile
 
 ### Description
-The task exports one or more classes to a single shapefile. The vectors include separate records for each polygon. 
+The task exports one or more classes to a single shapefile. The vectors include separate records for each polygon.
 
 This task can be run with Python using [gbdxtools](https://github.com/DigitalGlobe/gbdxtools) or through the [GBDX Web Application](https://gbdx.geobigdata.io/materials/)
 
@@ -23,15 +23,16 @@ Quick start example.
 # First Initialize the Environment
 from gbdxtools import Interface
 gbdx = Interface()
+
+data = 's3://gbd-customer-data/7d8cfdb6-13ee-4a2a-bf7e-0aff4795d927/ENVI/classification/classification_name.tif'
 shptask = gbdx.Task("ENVI_ClassificationToShapefile")
-data = ' s3://gbd-customer-data/7d8cfdb6-13ee-4a2a-bf7e-0aff4795d927/ENVI/classification/classification_name.hdr'
 shptask.inputs.input_raster = data
-shptask.inputs.file_types = "hdr"
 workflow = gbdx.Workflow([shptask])
 workflow.savedata(
-	       shptask.outputs.output_vector_uri,
-	          location='Auto-docs/ENVI/SHP'
+  shptask.outputs.output_vector_uri,
+    location='Auto-docs/ENVI/SHP'
 )
+
 workflow.execute()
 status = workflow.status["state"]
 wf_id = workflow.id
@@ -84,12 +85,27 @@ workflow.savedata(
 	       shptask.outputs.output_vector_uri,
 	          location='Auto-docs/ENVI/SHP'
 )
+
 workflow.execute()
 status = workflow.status["state"]
 wf_id = workflow.id
 # print wf_id
 # print status
 ```
+
+### Runtime
+
+The following table lists all applicable runtime outputs. (This section will be completed the Algorithm Curation team)
+For details on the methods of testing the runtimes of the task visit the following link:(INSERT link to GBDX U page here)
+
+  Sensor Name  |  Total Pixels  |  Total Area (k2)  |  Time(secs)  |  Time/Area k2
+--------|:----------:|-----------|----------------|---------------
+QB | 41,551,668 | 312.07 | 158.26 | 0.51 |
+WV01| 1,028,100,320 |351.72 | NA|NA |
+WV02|35,872,942|329.87|176.04 | 0.53|
+WV03|35,371,971|196.27| 232.00|1.18 |
+GE| 57,498,000|332.97|241.53 | 0.73|
+
 
 ### Issues
 List known past/current issues with this task (e.g., version x does not ingest vrt files).
