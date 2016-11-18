@@ -3,7 +3,6 @@ gbdx = Interface()
 
 data1 = "s3://receiving-dgcs-tdgplatform-com/055438828010_01_003"
 data2 = "s3://receiving-dgcs-tdgplatform-com/055690224010_01_003"
-benchmark = "s3://gbd-customer-data/7d8cfdb6-13ee-4a2a-bf7e-0aff4795d927/Benchmark/ENVI_ImageIntersection/fromNDVI"
 
 aoptask1 = gbdx.Task("AOP_Strip_Processor", data=data1, enable_acomp=True, enable_pansharpen=False, enable_dra=False, bands='MS')
 aoptask2 = gbdx.Task("AOP_Strip_Processor", data=data2, enable_acomp=True, enable_pansharpen=False, enable_dra=False, bands='MS')
@@ -35,13 +34,14 @@ envi_IBD.inputs.file_types = "hdr"
 envi_IBD.inputs.input_raster1 = envi_II.outputs.output_raster1_uri.value
 envi_IBD.inputs.input_raster2 = envi_II.outputs.output_raster2_uri.value
 
-envi_ACTC = gbdx.Task("ENVI_AutoChangeThresholdClassification")
-envi_ACTC.inputs.threshold_method = "Otsu"
-envi_ACTC.inputs.file_types = "hdr"
-envi_ACTC.inputs.input_raster = envi_IBD.outputs.output_raster_uri.value
+envi_CTC = gbdx.Task("ENVI_ChangeThresholdClassification")
+envi_CTC.inputs.increase_threshold = "0.1"
+envi_CTC.inputs.decrease_threshold = "0.5"
+envi_CTC.inputs.file_types = "hdr"
+envi_CTC.inputs.input_raster = envi_IBD.outputs.output_raster_uri.value
 
 
-workflow = gbdx.Workflow([aoptask1, aoptask2, envi_ndvi1, envi_ndvi2, envi_II, envi_IBD, envi_ACTC])
+workflow = gbdx.Workflow([aoptask1, aoptask2, envi_ndvi1, envi_ndvi2, envi_II, envi_IBD, envi_CTC])
 
 workflow.savedata(
     envi_II.outputs.output_raster1_uri,
@@ -54,8 +54,8 @@ workflow.savedata(
 )
 
 workflow.savedata(
-    envi_ACTC.outputs.output_raster_uri,
-        location='Benchmark/ENVI_ACTC/test/twoinputs'
+    envi_CTC.outputs.output_raster_uri,
+        location='Benchmark/ENVI_CTC/NDVI_threshold'
 )
 
 workflow.execute()
