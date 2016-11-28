@@ -5,7 +5,7 @@ import json
 
 def get_default(description):
     """Find the default value stated in the description.
-      If there is no default value, return None.
+      If there is no default value, return None
     """
     ind1 = description.find('Default is')
     if ind1 == -1: return
@@ -16,7 +16,7 @@ def get_default(description):
 # the status of the tests, and the content for the markdown document.
 # The associated files (markdown and example code) will be named using the task name in this list.
 list_of_tasks = [
-                    {'name': 'ENVI_ChangeThresholdClassification'}
+                    {'name': 'ENVI_ImageIntersection'}
 
                 ]
 
@@ -97,7 +97,7 @@ outputs_header = 'The following table lists all taskname outputs.\n' \
 gbdx = Interface()
 
 # Getting a list of known tasks on GBDx as we don't want to error when we query for the task description.
-known_tasks = gbdx.workflow.list_tasks()['tasks']
+known_tasks = gbdx.task_registry.list()
 print known_tasks
 
 # Loop through the list of tasks and mark whether the docs/code/GBDx task already exist,
